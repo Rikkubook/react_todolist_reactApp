@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+
+import DefaultLayout from "./components/DefaultLayout.js"
+import Login from "./components/Login.js"
+import Register from "./components/Register.js"
+import { Routes, Route } from "react-router-dom";
+import TodoList from "./components/TodoList/index.js";
+
+// https://codepen.io/liao/pen/mdpmXKg
+// https://www.figma.com/file/pFivfS3rDX3N3u3dN9aIlx/TodoList?node-id=6%3A194
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/" element={<DefaultLayout />} >
+          <Route index element={<Login />} />
+          <Route path="register" element={<Register />} /> {/*路path 不用斜線*/}
+        </Route>
+        <Route path="todoList" element={<TodoList />} />
+      </Routes>
     </div>
   );
 }
