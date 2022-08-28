@@ -1,19 +1,65 @@
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function Register() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) => alert(JSON.stringify(data));
+
   return (
-    <form class="formControls" action="index.html">
-      <h2 class="formControls_txt">註冊帳號</h2>
-      <label class="formControls_label" for="email">Email</label>
-      <input class="formControls_input" type="text" id="email" name="email" placeholder="請輸入 email" required />
-      <label class="formControls_label" for="name">您的暱稱</label>
-      <input class="formControls_input" type="text" id="name" name="email" placeholder="請輸入您的暱稱" required />
-      <label class="formControls_label" for="pwd">密碼</label>
-      <input class="formControls_input" type="password" name="pwd" id="pwd" placeholder="請輸入密碼" required />
-      <label class="formControls_label" for="pwdcheck">再次輸入密碼</label>
-      <input class="formControls_input" type="password" name="pwdcheck" id="pwdcheck" placeholder="請再次輸入密碼" required />
-      <input class="formControls_btnSubmit" type="button" onclick="" value="註冊帳號" />
-      <Link class="formControls_btnLink" to="/">登入</Link> {/*如果是 admin to="/admin"*/ }
+    <form className="formControls" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="formControls_txt">註冊帳號</h2>
+      <div>
+        <label className="formControls_label" htmlFor="email">Email</label>
+        <input className="formControls_input" type="text" placeholder="請輸入 email"
+        {...register("email",
+            {
+                required: {
+                  value: true,
+                  message: '請輸入資料內容!'
+                },
+                pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "格式有誤!"
+                }
+            }
+        )} />
+        <span>{errors.email && errors.email.message}</span>
+      </div>
+      <div className="">
+        <label className="formControls_label" htmlFor="name">您的暱稱</label>
+        <input className="formControls_input" id="name" type="text" name="name" placeholder="請輸入您的暱稱" 
+        {...register("name", 
+          {
+            required: {
+              value: true,
+              message: '請輸入資料內容!'
+            },
+            minLength: {
+              value: 2,
+              message: "最少兩個字"
+            }
+          })} 
+        />
+        <span>{errors.name && errors.name.message}</span>
+        {/*<span>{errors.name?.message}</span>*/}
+      </div>
+      <div>
+        <label className="formControls_label" htmlFor="pwd">密碼</label>
+        <input
+          className="formControls_input"
+          id="pwd"
+          type="password"
+          placeholder="請輸入密碼" 
+        />
+        {errors.pass && <span>此欄位必填</span>}
+      </div>
+      <div>
+        <label className="formControls_label" htmlFor="pwdcheck">再次輸入密碼</label>
+        <input className="formControls_input" id="pwdcheck" type="password" placeholder="請再次輸入密碼" {...register("pwdcheck", {required: true, min: 6})} />
+        {errors.pass && <span>此欄位必填</span>}
+      </div>
+      <input type="submit" className="formControls_btnSubmit" value="註冊帳號" />
+      <Link className="formControls_btnLink" to="/">登入</Link> {/*如果是 admin to="/admin"*/ }
     </form>
   )
 }
