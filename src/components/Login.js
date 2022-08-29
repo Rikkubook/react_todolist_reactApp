@@ -2,32 +2,32 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../Auth";
 
-function Login() {
-  // const { setToken } = useAuth();
-  // const navigate = useNavigate(); // 跳轉用
+function Login(props) {
+  const { token, setToken } = useAuth();
+  const navigate = useNavigate(); // 跳轉用
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data) => {
-    console.log(data)
-    // const _url = "https://todoo.5xcamp.us/users";
-    // console.log({user: data});
 
-    // let myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // fetch(_url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //       user: data
-    //   })
-    // }).then(res => {
-    //   alert(res)
-    //   // setToken(res.headers.get("authorization"));
-    //   return res.json()
-    // }).then(res => {
-    //   navigate('/todo')
-    // })
+  const onSubmit = (data) => {
+    const _url = "https://todoo.5xcamp.us/users/sign_in";
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    fetch(_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user: data
+      })
+    }).then(res => {
+      setToken(res.headers.get("authorization"));
+      return res.json()
+    }).then(result => {
+      console.log(result)
+      props.setUser(result)
+      navigate('/todoList')
+    })
   }
 
   return (
@@ -67,7 +67,7 @@ function Login() {
           }
         )}
       />
-      <span>{errors.password && errors.pass.message}</span>
+      <span>{errors.password && errors.password.message}</span>
     </div>
     <input type="submit" className="formControls_btnSubmit" value="登入" />
     <Link className="formControls_btnLink" to="register">註冊帳號</Link>
