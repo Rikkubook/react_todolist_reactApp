@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import DefaultLayout from "./components/DefaultLayout.js"
+import ProtectedRoute from "./components/ProtectRoute"
 import Login from "./components/Login.js"
 import Register from "./components/Register.js"
 import TodoList from "./components/TodoList/index.js";
@@ -22,7 +23,9 @@ function App() {
             <Route index element={<Login setUser={setUser}/>} />
             <Route path="register" element={<Register />} /> {/*路path 不用斜線*/}
           </Route>
-          <Route path="todoList" element={<TodoList use={user}/>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="todoList" element={<TodoList use={user}/>} />
+          </Route>
         </Routes>
       </AuthContext.Provider>
     </div>

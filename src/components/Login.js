@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../Auth";
 
 function Login(props) {
-  const { token, setToken } = useAuth();
-  const navigate = useNavigate(); // 跳轉用
+  const navigate = useNavigate(); // 跳轉路由用
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const {setToken } = useAuth();
 
   const onSubmit = (data) => {
     const _url = "https://todoo.5xcamp.us/users/sign_in";
@@ -21,12 +21,18 @@ function Login(props) {
           user: data
       })
     }).then(res => {
+      if(res.status===401){
+          throw new Error('登入失敗，請重新檢驗！');
+      }
       setToken(res.headers.get("authorization"));
+      console.log()
       return res.json()
     }).then(result => {
-      console.log(result)
       props.setUser(result)
       navigate('/todoList')
+    }).catch((error) => {
+      alert(error)
+      console.log(`Error: ${error}`);
     })
   }
 
@@ -47,7 +53,7 @@ function Login(props) {
                   message: "格式有誤!"
               }
           }
-        )} 
+        )}
       />
       <span>{errors.email && errors.email.message}</span>
     </div>

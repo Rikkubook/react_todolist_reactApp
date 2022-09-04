@@ -1,11 +1,20 @@
 import plus from "../../assets/plus-lg.svg"
 import LoginHeader from "./LoginHeader"
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../Auth";
 
-function TodoList() {
+function TodoList(props) {
+  const { token } = useAuth();
+  const navigate = useNavigate()
+
+  if (!token){
+    console.log('a')
+    return navigate('/')
+  }
+
   return (
     <div id="todoListPage" className="bg-half">
-        <LoginHeader />
+        <LoginHeader use={props.use}/>
         <div className="conatiner todoListPage vhContainer">
           <div className="todoList_Content">
               <div className="inputBox">
