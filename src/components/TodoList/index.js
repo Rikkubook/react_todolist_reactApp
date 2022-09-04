@@ -1,14 +1,39 @@
-import plus from "../../assets/plus-lg.svg"
 import LoginHeader from "./LoginHeader"
+import InputBox from "./InputBox"
+import Tabs from "./Tabs"
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../Auth";
+import { useState, useEffect } from "react";
 
 function TodoList(props) {
   const { token } = useAuth();
   const navigate = useNavigate()
 
+  const [todoList, setTodoList] = useState([]);
+  const _url = "https://todoo.5xcamp.us/todos";
+
+  useEffect(() => {
+    getTodo()
+  }, [])
+
+  const getTodo = () => {
+    fetch(_url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        'authorization': token
+      }
+    }).then((res) => {
+      console.log(res);
+      return res.json();
+    }).then((result) => {
+      console.log(result)
+      setTodoList(result.todos)
+    });
+  }
+
+
   if (!token){
-    console.log('a')
     return navigate('/')
   }
 
@@ -17,74 +42,22 @@ function TodoList(props) {
         <LoginHeader use={props.use}/>
         <div className="conatiner todoListPage vhContainer">
           <div className="todoList_Content">
-              <div className="inputBox">
-                <input type="text" placeholder="請輸入待辦事項" />
-                <a href="/#">
-                  <img className="plus-icon" src={plus} alt="plus" />
-                </a>
-              </div>
+              <InputBox getTodo={getTodo}/>
               <div className="todoList_list">
-                <ul className="todoList_tab">
-                  <li><a href="/#" className="active">全部</a></li>
-                  <li><a href="/#">待完成</a></li>
-                  <li><a href="/#">已完成</a></li>
-                </ul>
+                <Tabs/>
                 <div className="todoList_items">
                   <ul className="todoList_item">
+                    {todoList.map((item)=>(
                       <li>
                         <label className="todoList_label">
                           <input className="todoList_input" type="checkbox" value="true" />
-                          <span>把冰箱發霉的檸檬拿去丟</span>
+                          <span>{item.content}</span>
                         </label>
                         <a href="/#">
                           <i className="fa fa-times"></i>
                         </a>
                       </li>
-                      <li>
-                        <label className="todoList_label">
-                            <input className="todoList_input" type="checkbox" value="true" />
-                            <span>打電話叫媽媽匯款給我</span>
-                        </label>
-                        <a href="/#">
-                          <i className="fa fa-times"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <label className="todoList_label">
-                          <input className="todoList_input" type="checkbox" value="true" />
-                          <span>整理電腦資料夾</span>
-                        </label>
-                        <a href="/#">
-                          <i className="fa fa-times"></i>
-                        </a>
-                      </li>
-                      <li>
-                          <label className="todoList_label">
-                            <input className="todoList_input" type="checkbox" value="true" />
-                            <span>繳電費水費瓦斯費</span>
-                          </label>
-                          <a href="/#">
-                            <i className="fa fa-times"></i>
-                          </a>
-                      </li>
-                      <li>
-                        <label className="todoList_label">
-                          <input className="todoList_input" type="checkbox" value="true" />
-                          <span>約vicky禮拜三泡溫泉</span>
-                        </label>
-                        <a href="/#">
-                          <i className="fa fa-times"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <label className="todoList_label">
-                          <input className="todoList_input" type="checkbox" value="true" />
-                          <span>約ada禮拜四吃晚餐</span>
-                        </label>
-                        <a href="/#">
-                          <i className="fa fa-times"></i>
-                        </a>
-                      </li>
+                    ))}
                   </ul>
                   <div className="todoList_statistics">
                     <p> 5 個已完成項目</p>
