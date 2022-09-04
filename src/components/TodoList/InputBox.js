@@ -12,7 +12,7 @@ function InputBox(props) {
   const handleChange = (e) => {
     setNewTodo({content: e.target.value});
   };
-  const addTodo = ()=>{
+  const handleAddTodo = ()=>{
     fetch(_url, {
       method: "POST",
       headers: {
@@ -24,11 +24,7 @@ function InputBox(props) {
       })
     }).then((res) => {
       return res.json();
-    }).then((result) => {
-      console.log(result)
-      console.log(props)
-      props.getTodo()
-    });
+    })
   }
   return (
     <div className="inputBox">
@@ -38,7 +34,7 @@ function InputBox(props) {
         value={newTodo.value}
         onChange={handleChange}
       />
-      <Link to="#" onClick={addTodo}>
+      <Link to="#" onClick={handleAddTodo}>
         <img className="plus-icon" src={plus} alt="plus" />
       </Link>
     </div>
