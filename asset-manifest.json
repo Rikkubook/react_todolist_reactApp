@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.ad6cdccb.css",
-    "main.js": "/static/js/main.ef14ea45.js",
-    "static/js/787.21d72681.chunk.js": "/static/js/787.21d72681.chunk.js",
-    "static/media/img.png": "/static/media/img.e239cd77c3e6f3d3bb03.png",
-    "index.html": "/index.html",
-    "static/media/plus-lg.svg": "/static/media/plus-lg.5fdd748c9610ba0287122ac5764a3fa4.svg",
-    "main.ad6cdccb.css.map": "/static/css/main.ad6cdccb.css.map",
-    "main.ef14ea45.js.map": "/static/js/main.ef14ea45.js.map",
-    "787.21d72681.chunk.js.map": "/static/js/787.21d72681.chunk.js.map"
+    "main.css": "/react_todolist_reactApp/static/css/main.ad6cdccb.css",
+    "main.js": "/react_todolist_reactApp/static/js/main.0fc396e8.js",
+    "static/js/787.21d72681.chunk.js": "/react_todolist_reactApp/static/js/787.21d72681.chunk.js",
+    "static/media/img.png": "/react_todolist_reactApp/static/media/img.e239cd77c3e6f3d3bb03.png",
+    "index.html": "/react_todolist_reactApp/index.html",
+    "static/media/plus-lg.svg": "/react_todolist_reactApp/static/media/plus-lg.5fdd748c9610ba0287122ac5764a3fa4.svg",
+    "main.ad6cdccb.css.map": "/react_todolist_reactApp/static/css/main.ad6cdccb.css.map",
+    "main.0fc396e8.js.map": "/react_todolist_reactApp/static/js/main.0fc396e8.js.map",
+    "787.21d72681.chunk.js.map": "/react_todolist_reactApp/static/js/787.21d72681.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ad6cdccb.css",
-    "static/js/main.ef14ea45.js"
+    "static/js/main.0fc396e8.js"
   ]
 }
